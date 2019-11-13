@@ -1,0 +1,11 @@
+timestamps  - created at, updated at
+underscored - criar as tabelas com _ e nao camelcase , exemplo: Usergroups -  User_groups
+
+MIGRATIONS
+criar migrations:
+yarn sequelize migration:create --name=create-users
+rodar migrations:
+yarn sequelize db:migrate
+
+Tabelas-
+provider - quando ele for um prestador de servicos (true), quando for um cliente( false)
