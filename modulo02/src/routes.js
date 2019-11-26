@@ -2,11 +2,20 @@
 import { Router } from 'express';
 
 import UserController from './app/controllers/UserController';
+import SessionController from './app/controllers/SessionController'
+
+import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
 
 // store - nome do metodo que esta usando dentro da classe
 routes.post('/users', UserController.store);
+routes.post('/sessions', SessionController.store);
+// usar globalmente (obs: so funciona para as rotas que vem após ele, cronologicamente)
+routes.use(authMiddleware);
+routes.put('/users', UserController.update);
+
+// routes.put('/users', authMiddleware, UserController.update);
 
 // module.exports = routes;
 export default routes;

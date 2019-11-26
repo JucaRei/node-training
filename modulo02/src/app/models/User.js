@@ -28,6 +28,12 @@ class User extends Model {
 
     return this;
   }
+
+  // verificação de senha
+  checkPassword(password) {
+    return bcrypt.compare(password, this.password_hash);   // metodo compare do bcrypt
+  }
+
 }
 
 // hooks do sequelize, vai ser executado antes da criação

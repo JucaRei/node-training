@@ -13,3 +13,10 @@ yarn sequelize db:migrate:undo:all
 
 Tabelas-
 provider - quando ele for um prestador de servicos (true), quando for um cliente( false)
+
+
+Dicas -
+https://www.md5online.org/  ( token aleatório)
+
+Bibliotecas -
+valição - yup
