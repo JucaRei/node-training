@@ -1,19 +1,19 @@
 // verifica se o usuário está logado
 
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 // biblioteca padrão do node ( pega uma função de callback e transforma em uma função async await)
 import { promisify } from 'util';
 
-import authConfig from '../../config/auth'
+import authConfig from '../../config/auth';
 
 export default async (req, res, next) => {
   // pegar o token no header
-  const authHeader = req.headers.authorization
+  const authHeader = req.headers.authorization;
 
   // console.log(authHeader);
 
   if (!authHeader) {
-    return res.status(401).json({ error: 'Token not provided' })
+    return res.status(401).json({ error: 'Token not provided' });
   }
 
   // dividir a partir do espaço, pega so o bearer e o token em arrays separados
@@ -32,8 +32,7 @@ export default async (req, res, next) => {
     req.userId = decoded.id;
 
     return next();
-
   } catch (err) {
     return res.status(401).json({ error: 'Token invalid' });
   }
-}
+};

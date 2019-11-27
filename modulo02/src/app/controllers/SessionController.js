@@ -1,20 +1,19 @@
-import jwt from 'jsonwebtoken'
-import * as Yup from 'yup'
+import jwt from 'jsonwebtoken';
+import * as Yup from 'yup';
 
-import authConfig from '../../config/auth'
-import User from '../models/User'
+import authConfig from '../../config/auth';
+import User from '../models/User';
 
 class SessionController {
   async store(req, res) {
-
     const schema = Yup.object().shape({
       name: Yup.string(),
       email: Yup.string(),
-      oldPassword: Yup.string().min(6),  // se informar a senha antiga a nova precisa estar presente
+      oldPassword: Yup.string().min(6), // se informar a senha antiga a nova precisa estar presente
       password: Yup.string()
         .min(6)
         .when('oldPassword', (oldPassword, field) => {
-          oldPassword ? field.required() : field
+          oldPassword ? field.required() : field;
         }),
     });
 
@@ -34,7 +33,7 @@ class SessionController {
     }
 
     // verifica se a senha NÃO está batendo...
-    if (!await user.checkPassword(password)) {
+    if (!(await user.checkPassword(password))) {
       return res.status(401).json({ error: 'Password does not match' });
     }
 
@@ -47,10 +46,9 @@ class SessionController {
         email,
       },
       // coloca dentro do token: id, qualquer coisa que so você vai saber, tempo de expiração (7 dias)
-      token: jwt.sign({ id }, authConfig.secret,
-        {
-          expiresIn: authConfig.expiresIn,
-        }),
+      token: jwt.sign({ id }, authConfig.secret, {
+        expiresIn: authConfig.expiresIn,
+      }),
     });
   }
 }

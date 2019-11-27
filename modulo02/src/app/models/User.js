@@ -19,7 +19,7 @@ class User extends Model {
       }
     );
 
-    this.addHook('beforeSave', async (user) => {
+    this.addHook('beforeSave', async user => {
       if (user.password) {
         user.password_hash = await bcrypt.hash(user.password, 8);
         // se a senha não existir, criptografa a senha e o outro parâmetro é o numero de rounds (força) de criptografia
@@ -31,9 +31,8 @@ class User extends Model {
 
   // verificação de senha
   checkPassword(password) {
-    return bcrypt.compare(password, this.password_hash);   // metodo compare do bcrypt
+    return bcrypt.compare(password, this.password_hash); // metodo compare do bcrypt
   }
-
 }
 
 // hooks do sequelize, vai ser executado antes da criação

@@ -2,7 +2,7 @@
 import { Router } from 'express';
 
 import UserController from './app/controllers/UserController';
-import SessionController from './app/controllers/SessionController'
+import SessionController from './app/controllers/SessionController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -20,19 +20,9 @@ routes.put('/users', UserController.update);
 // module.exports = routes;
 export default routes;
 
-
-
-
-
-
-
-
-
-
-
 // import User from './app/models/User';
 
-/*routes.get('/', async (req, res) => {
+/* routes.get('/', async (req, res) => {
       const user = await User.create({
         name: 'Reinaldo P Junior',
         email: 'reinaldo@gmail.com',
