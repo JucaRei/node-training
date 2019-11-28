@@ -6,21 +6,21 @@ import User from '../models/User';
 
 class SessionController {
   async store(req, res) {
-    const schema = Yup.object().shape({
-      name: Yup.string(),
-      email: Yup.string(),
-      oldPassword: Yup.string().min(6), // se informar a senha antiga a nova precisa estar presente
-      password: Yup.string()
-        .min(6)
-        .when('oldPassword', (oldPassword, field) => {
-          oldPassword ? field.required() : field;
-        }),
-    });
+    // const schema = Yup.object().shape({
+    //   name: Yup.string(),
+    //   email: Yup.string(),
+    //   oldPassword: Yup.string().min(6), // se informar a senha antiga a nova precisa estar presente
+    //   password: Yup.string()
+    //     .min(6)
+    //     .when('oldPassword', (oldPassword, field) => {
+    //       oldPassword ? field.required() : field;
+    //     }),
+    // });
 
-    // verificar se o req.body está passando com o schema de validações
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation failed' });
-    }
+    // // verificar se o req.body está passando com o schema de validações
+    // if (!(await schema.isValid(req.body))) {
+    //   return res.status(400).json({ error: 'Validation failed' });
+    // }
 
     const { email, password } = req.body; // pega o email e a senha do corpo da requisição
 

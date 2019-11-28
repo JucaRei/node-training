@@ -17,9 +17,9 @@ class UserController {
     });
 
     // verificar se o req.body está passando com o schema de validações
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation failed' });
-    }
+    // if (!(await schema.isValid(req.body))) {
+    //   return res.status(400).json({ error: 'Validation failed' });
+    // }
 
     // verificar se já não existe usuário com o email
     const userExists = await User.findOne({ where: { email: req.body.email } });
@@ -47,18 +47,17 @@ class UserController {
 
     const schema = Yup.object().shape({
       name: Yup.string(),
-      email: Yup.string(),
+      email: Yup.string().email(),
       oldPassword: Yup.string().min(6), // se informar a senha antiga a nova precisa estar presente
       password: Yup.string()
         .min(6)
-        .when('oldPassword', (oldPassword, field) => {
-          oldPassword ? field.required() : field;
+        .when('oldPassword', (oldPassword, field) => {  // validação condicional em cima da variavel oldPassword
+          oldPassword ? field.required() : field; // se oldPassword estiver preenchido, é requirido o campo password
         }),
       confirmPassword: Yup.string()
-        .required()
-        .when('password', (password, field) => {
+        .when('password', (password, field) => { // quando tiver o campo senha preenchido, vai requerer o campo confirmar
           password ? field.required().oneOf([Yup.ref('password')]) : field;
-        }), // metodo do Yup, comparar
+        }), // igual ao password metodo do Yup, comparar | ref - referindo ao campo password, seja igual ao password
     });
 
     // verificar se o req.body está passando com o schema de validações

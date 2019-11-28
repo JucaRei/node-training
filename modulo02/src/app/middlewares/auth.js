@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 // biblioteca padrão do node ( pega uma função de callback e transforma em uma função async await)
 import { promisify } from 'util';
 
-import authConfig from '../../config/auth';
+import authConfig from '../../config/auth'; // onde esta o segredo do token, precisa descriptografar
 
 export default async (req, res, next) => {
   // pegar o token no header

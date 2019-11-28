@@ -1,4 +1,4 @@
-// padronizar os caminhos (em qualquer sistema)
+// resolve - padronizar os caminhos (em qualquer sistema)
 const { resolve } = require('path');
 
 module.exports = {
