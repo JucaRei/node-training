@@ -8,18 +8,14 @@ class UserController {
     const schema = Yup.object().shape({
       // validando um objeto(req.body é um objeto - shape (formato que o objeto tenha))
       name: Yup.string().required(),
-      email: Yup.string()
-        .email()
-        .required(), // verifica se o email esta correto: @, etc
-      password: Yup.string()
-        .required()
-        .min(6), // mínimo 6 digitos
+      email: Yup.string().email().required(), // verifica se o email esta correto: @, etc
+      password: Yup.string().required().min(2), // mínimo 6 digitos
     });
 
     // verificar se o req.body está passando com o schema de validações
-    // if (!(await schema.isValid(req.body))) {
-    //   return res.status(400).json({ error: 'Validation failed' });
-    // }
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation failed' });
+    }
 
     // verificar se já não existe usuário com o email
     const userExists = await User.findOne({ where: { email: req.body.email } });
@@ -43,26 +39,27 @@ class UserController {
 
   // alteração dos dados cadastrados
   async update(req, res) {
-    // console.log(req.userId);
-
     const schema = Yup.object().shape({
       name: Yup.string(),
       email: Yup.string().email(),
-      oldPassword: Yup.string().min(6), // se informar a senha antiga a nova precisa estar presente
+      oldPassword: Yup.string().min(6),
       password: Yup.string()
         .min(6)
-        .when('oldPassword', (oldPassword, field) => {  // validação condicional em cima da variavel oldPassword
-          oldPassword ? field.required() : field; // se oldPassword estiver preenchido, é requirido o campo password
-        }),
-      confirmPassword: Yup.string()
-        .when('password', (password, field) => { // quando tiver o campo senha preenchido, vai requerer o campo confirmar
-          password ? field.required().oneOf([Yup.ref('password')]) : field;
-        }), // igual ao password metodo do Yup, comparar | ref - referindo ao campo password, seja igual ao password
+        .when('oldPassword', (oldPassword, field) =>
+          oldPassword ? field.required() : field
+        ),
+      confirmPassword: Yup.string().when('password', (password, field) =>
+        password ? field.required().oneOf([Yup.ref('password')]) : field
+      ),
     });
+    // se informar a senha antiga a nova precisa estar presente
+    // validação condicional em cima da variavel oldPassword
+    // se oldPassword estiver preenchido, é requirido o campo password
+    // igual ao password metodo do Yup, comparar | ref - referindo ao campo password, seja igual ao password
 
     // verificar se o req.body está passando com o schema de validações
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation failed' });
+    if ((await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
     }
 
     // vai mostrar a senha antiga/atual para atualizar (oldPassword)

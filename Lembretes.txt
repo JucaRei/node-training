@@ -17,6 +17,8 @@ provider - quando ele for um prestador de servicos (true), quando for um cliente
 
 Dicas -
 https://www.md5online.org/  ( token aleatório)
+hmac - critopgrafia mais forte, mais seguro que o md5
+uuid
 
 Eslint -
 yarn eslint --init
