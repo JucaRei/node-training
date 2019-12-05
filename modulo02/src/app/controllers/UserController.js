@@ -9,7 +9,7 @@ class UserController {
       // validando um objeto(req.body é um objeto - shape (formato que o objeto tenha))
       name: Yup.string().required(),
       email: Yup.string().email().required(), // verifica se o email esta correto: @, etc
-      password: Yup.string().required().min(2), // mínimo 6 digitos
+      password: Yup.string().required().min(6), // mínimo 6 digitos
     });
 
     // verificar se o req.body está passando com o schema de validações
