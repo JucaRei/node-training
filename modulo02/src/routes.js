@@ -1,12 +1,17 @@
 // do express
 import { Router } from 'express';
+import multer from 'multer';
+import multerConfig from './config/multer';
 
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
+import FileController from './app/controllers/FileController'
+import ProviderController from './app/controllers/ProviderController'
 
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
+const upload = multer(multerConfig);
 
 // store - nome do metodo que esta usando dentro da classe
 routes.post('/users', UserController.store);
@@ -15,19 +20,10 @@ routes.post('/sessions', SessionController.store);
 routes.use(authMiddleware);
 routes.put('/users', UserController.update);
 
-// routes.put('/users', authMiddleware, UserController.update);
+routes.get('/providers', ProviderController.index);
+
+// single - 1 upload por vez e não vários
+routes.post('/files', upload.single('file'), FileController.store);
 
 // module.exports = routes;
 export default routes;
-
-// import User from './app/models/User';
-
-/* routes.get('/', async (req, res) => {
-      const user = await User.create({
-        name: 'Reinaldo P Junior',
-        email: 'reinaldo@gmail.com',
-        password_hash: '123818773158',
-      })
-
-      return res.json(user);
-    }); */
