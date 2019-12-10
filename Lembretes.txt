@@ -29,6 +29,7 @@ Bibliotecas -
 valição - yup
 eslint - linting do código
 sequelize - ORM
+date-fns - Biblioteca para lidar com datas
 
 Banco
 Banco de dados isolado - quando coloca a imagem, grava grava o id da imagem
