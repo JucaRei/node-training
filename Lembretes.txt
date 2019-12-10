@@ -30,8 +30,13 @@ valição - yup
 eslint - linting do código
 sequelize - ORM
 date-fns - Biblioteca para lidar com datas
+mongoose - ORM mongodb
 
 Banco
 Banco de dados isolado - quando coloca a imagem, grava grava o id da imagem
 multer - multi-part-form-data, suporta uploud de arquivos
 CDN - (storage) servidores online, feitos para armazenamento físicos, ex: amazon S3, Digital Ocean
+
+Docker
+docker run --name mongobarber -p 27017:27017 -d -t mvertes/alpine-mongo
+docker run --name database -p 5435:5432 -d postgres:11.5-alpine
